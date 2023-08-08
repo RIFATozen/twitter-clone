@@ -1,0 +1,29 @@
+.trending {
+  margin: 5px 10px;
+}
+.trending > div {
+  margin-bottom: 20px;
+}
+.trending h2 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.verified {
+  padding: 15px;
+  background-color: var(--color-trending);
+  border-radius: 20px;
+}
+.verified > p {
+  margin: 10px 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+.verified > button {
+  padding: 8px 17px;
+  border-radius: 9999px;
+  border: 0;
+  color: white;
+  background-color: var(--color-tweet);
+  font-weight: 800;
+}

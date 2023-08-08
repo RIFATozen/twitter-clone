@@ -1,0 +1,54 @@
+.timeline {
+  border-right: 1px solid rgb(47, 51, 54);
+  border-left: 1px solid rgb(47, 51, 54);
+}
+
+.title {
+  display: grid;
+  grid-template-columns: 1fr;
+  height: 106px;
+  padding: 20px;
+  border-bottom: 1px solid rgb(47, 51, 54);
+}
+
+.content {
+  justify-items: center;
+  align-items: center;
+}
+
+.tweet {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  padding: 20px;
+}
+.tweet img {
+  border-radius: 9999px;
+}
+
+.tweet_ornamental div:last-child {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.tweet_ornamental button {
+  color: white;
+  background-color: var(--color-tweet);
+  border: 0;
+  border-radius: 9999px;
+}
+
+.title div:last-child {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.tweeticon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.tweeticon svg {
+  fill: white;
+  width: 20px;
+}

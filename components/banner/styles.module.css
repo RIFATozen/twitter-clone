@@ -1,0 +1,59 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+.container svg {
+  fill: white;
+  margin-right: 20px;
+  margin-left: 15px;
+}
+
+.banner > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 32px;
+  margin-top: 14px;
+}
+
+.banner > div > p {
+  font-size: 20px;
+}
+
+.btn button {
+  font-size: 17px;
+  padding: 16px;
+  width: 90%;
+  border-radius: 9999px;
+  background-color: var(--color-tweet);
+  color: white;
+  border: 1px solid black;
+  font-weight: 700;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  margin-bottom: 25px;
+}
+
+.info > div {
+  display: flex;
+  align-items: center;
+}
+.info h6 {
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.info h6 ~ p {
+  color: gray;
+}
+
+.info img {
+  border-radius: 9999px;
+  margin-right: 10px;
+}
