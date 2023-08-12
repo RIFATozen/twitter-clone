@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import styles from "./styles.module.css";
 
 const tweetItems = [
@@ -59,13 +60,34 @@ const tweetItems = [
 ];
 
 function Timeline() {
+  const [following, setFollowing] = useState(false);
+  const changeFollowing = () => {
+    setFollowing(true);
+  };
+  const changeForyou = () => {
+    setFollowing(false);
+  };
   return (
     <div className={styles.timeline}>
       <div className={styles.title}>
-        <div>Home</div>
+        <div style={{ cursor: "pointer" }}>Home</div>
         <div className={styles.content}>
-          <div>For you</div>
-          <div>Following</div>
+          <div onClick={changeForyou}>
+            <div>
+              <h6 style={following ? { color: "grey" } : { color: "white" }}>
+                For you
+              </h6>
+              <div className={following ? styles.notblue : styles.blue}></div>
+            </div>
+          </div>
+          <div onClick={changeFollowing}>
+            <div>
+              <h6 style={!following ? { color: "grey" } : { color: "white" }}>
+                Following
+              </h6>
+              <div className={following ? styles.blue : styles.notblue}></div>
+            </div>
+          </div>
         </div>
       </div>
       <div className={styles.tweet}>
@@ -74,7 +96,7 @@ function Timeline() {
         </div>
         <div className={styles.tweet_ornamental}>
           <div>
-            <input type="text" />
+            <input type="text" placeholder="What is happening?!" />
           </div>
           <div>
             <div className={styles.tweeticon}>
