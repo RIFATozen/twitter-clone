@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 
 const Modal = () => {
@@ -12,7 +12,6 @@ const Modal = () => {
 
 function Search() {
   const [modalVisible, setModalVisible] = useState(false);
-  const inputRef = useRef(null);
 
   const handleInputClick = () => {
     setModalVisible(true);
@@ -56,7 +55,7 @@ function Search() {
         type="text"
         placeholder="Search"
         onClick={handleInputClick}
-        ref={inputRef}
+
       />
       {modalVisible && <Modal />}
     </div>

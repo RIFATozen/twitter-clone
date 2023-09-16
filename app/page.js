@@ -1,9 +1,6 @@
-import HomeContainer from "@/containers/home";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  return (
-    <div>
-      <HomeContainer />
-    </div>
-  );
+export default function Page() {
+  redirect("/home");
+  return null;
 }

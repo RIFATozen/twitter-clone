@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styles from "./styles.module.css";
 
 const tweetItems = [
@@ -67,14 +67,41 @@ function Timeline() {
   const changeForyou = () => {
     setFollowing(false);
   };
+
+  const divRef = useRef(null);
+
+  const placeholder = "What is happening?!";
+
+  const handleDivClick = () => {
+    const contentDiv = divRef.current;
+    if (contentDiv.textContent.trim() === placeholder) {
+      contentDiv.textContent = "";
+      contentDiv.style.color = "white";
+    }
+  };
+  
+  const handleDivBlur = () => {
+    const contentDiv = divRef.current;
+    if (contentDiv.textContent.trim() === "") {
+      contentDiv.textContent = placeholder;
+      contentDiv.style.color = "grey";
+    }
+  };
+
   return (
     <div className={styles.timeline}>
       <div className={styles.title}>
-        <div style={{ cursor: "pointer" }}>Home</div>
+        <div style={{ cursor: "pointer" , fontWeight:700}}>Home</div>
         <div className={styles.content}>
           <div onClick={changeForyou}>
             <div>
-              <h6 style={following ? { color: "grey" } : { color: "white" }}>
+              <h6
+                style={
+                  following
+                    ? { color: "grey" }
+                    : { color: "white", fontWeight: "600" }
+                }
+              >
                 For you
               </h6>
               <div className={following ? styles.notblue : styles.blue}></div>
@@ -82,7 +109,13 @@ function Timeline() {
           </div>
           <div onClick={changeFollowing}>
             <div>
-              <h6 style={!following ? { color: "grey" } : { color: "white" }}>
+              <h6
+                style={
+                  !following
+                    ? { color: "grey" }
+                    : { color: "white", fontWeight: "600" }
+                }
+              >
                 Following
               </h6>
               <div className={following ? styles.blue : styles.notblue}></div>
@@ -96,7 +129,15 @@ function Timeline() {
         </div>
         <div className={styles.tweet_ornamental}>
           <div>
-            <input type="text" placeholder="What is happening?!" />
+            <div
+              className={styles.editableDiv}
+              contentEditable="true"
+              ref={divRef}
+              onClick={handleDivClick}
+              onBlur={handleDivBlur}
+            >
+              What is happening?!
+            </div>
           </div>
           <div>
             <div className={styles.tweeticon}>

@@ -3,41 +3,197 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100vh;
-}
-.container svg {
-  fill: white;
-  margin-right: 20px;
-  margin-left: 15px;
+  border-right: 1px solid rgb(47, 51, 54);
+  overflow: auto;
 }
 
-.banner > div {
+.white,
+.info {
+  fill: white;
+}
+.banner > a:not(:first-child) > div > svg {
+  margin-right: 20px;
+}
+.banner > a:first-child > div {
+  margin-bottom: 4px;
+}
+
+.banner > a {
+  text-decoration: none;
+  color: white;
+}
+.banner > a > div {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 32px;
-  margin-top: 14px;
+  width: max-content;
+
+  border-radius: 9999px;
+  padding: 12px;
+  margin-left: 15px;
+  transition: background-color 0.2s ease-in-out;
+}
+.banner > a > div:hover {
+  background-color: rgba(236, 236, 236, 0.1);
 }
 
-.banner > div > p {
+.banner > a:not(:first-child) p {
   font-size: 20px;
+  padding-right: 10px;
 }
 
 .btn button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 17px;
-  padding: 16px;
+  padding: 10px;
   width: 90%;
   border-radius: 9999px;
   background-color: var(--color-tweet);
   color: white;
   border: 1px solid black;
   font-weight: 700;
+  margin: 10px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btn button:hover {
+  cursor: pointer;
+  background-color: var(--color-tweet-active);
+}
+.btn button svg {
+  display: none;
+}
+
+.modalOverlay {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(90, 112, 129, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.modal {
+  background-color: #fefefe;
+  top: 3%;
+  padding: 20px 20px 0 20px;
+  max-height: 90vh;
+  width: 570px;
+  border-radius: 16px;
+  position: relative;
+  color: white;
+  background-color: black;
+}
+
+.close {
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  cursor: pointer;
+}
+.close svg {
+  fill: white;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.tweet {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+
+  padding: 16px 16px 0 0;
+  margin-top: 10px;
+}
+.tweet img {
+  border-radius: 9999px;
+}
+
+.tweet_ornamental > div:last-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 50px;
+  border-top: 1px solid rgb(47, 51, 54);
+}
+.tweet_ornamental button {
+  color: grey;
+  background-color: var(--color-post-inactive);
+  font-size: 15px;
+  line-height: 15px;
+  border: 0;
+  height: min-content;
+  border-radius: 9999px;
+  padding: 10px 18px;
+}
+.tweet_ornamental .editableDiv {
+  font-size: 20px;
+  line-height: 24px;
+  width: 500px;
+  box-sizing: border-box;
+  color: white;
+  background-color: inherit;
+  border: 0;
+  padding: 6px 0 0 12px;
+  color: grey;
+}
+.tweet_ornamental .editableDiv:focus {
+  outline: none;
+  border: 0;
+}
+
+.tweeticon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 6px;
+}
+
+.tweeticon > div:not(:last-child) {
+  fill: var(--color-tweet);
+  width: 20px;
+  padding: 8px;
+}
+.tweeticon > div:last-child {
+  fill: var(--color-post-inactive);
+  width: 20px;
+  padding: 8px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.tweeticon > div:not(:last-child):hover {
+  cursor: pointer;
+  background-color: rgba(15, 78, 120, 0.2);
+  border-radius: 9999px;
 }
 
 .info {
   display: flex;
   justify-content: space-between;
   font-size: 15px;
-  margin-bottom: 25px;
+  margin: 15px 10px;
+  padding: 10px;
+  border-radius: 9999px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.info:hover {
+  cursor: pointer;
+  background-color: rgba(236, 236, 236, 0.1);
 }
 
 .info > div {
@@ -56,4 +212,29 @@
 .info img {
   border-radius: 9999px;
   margin-right: 10px;
+}
+
+@media screen and (min-width: 1900px) {
+  .banner > div:not(:has(button)) {
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 1310px) {
+  .white p {
+    display: none;
+  }
+  .btn > button {
+    width: 54%;
+    margin-left: 17px;
+  }
+  .btn button svg {
+    display: inline-block;
+  }
+  .btn button span {
+    display: none;
+  }
+  .info >div :not(img) {
+    display: none;
+  }
 }

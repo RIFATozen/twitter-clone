@@ -3,6 +3,7 @@ import styles from "./styles.module.css";
 import Trend from "../trend";
 import Person from "../person";
 import Search from "../search";
+import Link from "next/link";
 
 function Trending() {
   return (
@@ -23,28 +24,42 @@ function Trending() {
       </div>
       <div className={styles.footer}>
         <div>
-          <a href="#">Terms of Service</a>
+          <Link href="#">Terms of Service</Link>
         </div>
         <div>
-          <a href="#">Privacy Policy</a>
+          <Link href="#">Privacy Policy</Link>
         </div>
         <div>
-          <a href="#">Cookie Policy</a>
+          <Link href="#">Cookie Policy</Link>
         </div>
         <div>
-          <a href="#">Imprint</a>
+          <Link href="#">Imprint</Link>
         </div>
         <div>
-          <a href="#">Accessibility</a>
+          <Link href="#">Accessibility</Link>
         </div>
         <div>
-          <a href="#">Ads info</a>
+          <Link href="#">Ads info</Link>
         </div>
         <div>
-          <a href="#">More</a>
+          <Link href="#">
+            <div>
+              More
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                fill="grey"
+                width="13px"
+              >
+                <g>
+                  <path d="M3 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path>
+                </g>
+              </svg>
+            </div>
+          </Link>
         </div>
         <div>
-          <a href="#">© 2023 X Corp.</a>
+          <Link href="#">© 2023 X Corp.</Link>
         </div>
       </div>
     </div>

@@ -1,8 +1,11 @@
 .trending {
-  margin: 5px 10px;
+  margin: 5px 30px;
 }
-.trending > div {
-  margin-bottom: 20px;
+.trending > div:not(:first-child):not(:last-child) {
+  margin-bottom: 16px;
+  padding: 15px;
+  background-color: var(--color-trending);
+  border-radius: 20px;
 }
 .trending h2 {
   font-size: 20px;
@@ -10,10 +13,9 @@
 }
 
 .verified {
-  padding: 15px;
-  background-color: var(--color-trending);
-  border-radius: 20px;
+  margin-top: 16px;
 }
+
 .verified > p {
   margin: 10px 0;
   font-size: 15px;
@@ -26,4 +28,27 @@
   color: white;
   background-color: var(--color-tweet);
   font-weight: 800;
+}
+
+.footer {
+  padding: 0 15px;
+}
+
+.footer > div {
+  display: inline-block;
+  margin-right: 10px;
+}
+.footer > div div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.footer a {
+  color: rgb(100, 100, 100);
+  font-size: 13px;
+  line-height: 20px;
+  text-decoration: none;
+}
+.footer a:hover {
+  text-decoration: underline;
 }

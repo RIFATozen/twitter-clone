@@ -1,6 +1,5 @@
 .timeline {
   border-right: 1px solid rgb(47, 51, 54);
-  border-left: 1px solid rgb(47, 51, 54);
 }
 
 .title {
@@ -13,6 +12,10 @@
   font-size: 20px;
 }
 
+.title > div:last-child {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 .content {
   justify-items: center;
   align-items: center;
@@ -41,6 +44,7 @@
 .blue {
   background-color: var(--color-tweet);
   height: 4px;
+  border-radius: 9999px;
 }
 .notblue {
   height: 4px;
@@ -56,7 +60,7 @@
   border-radius: 9999px;
 }
 
-.tweet_ornamental div:last-child {
+.tweet_ornamental > div:last-child {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -71,24 +75,22 @@
   border-radius: 9999px;
   padding: 10px 18px;
 }
-.tweet_ornamental input {
+.tweet_ornamental .editableDiv {
   font-size: 20px;
   line-height: 24px;
-  width: 100%;
+  height: 24px;
+  width: 525px;
   box-sizing: border-box;
-  color: white;
   background-color: inherit;
   border: 0;
   padding: 6px 0 0 12px;
-}
-.tweet_ornamental input:focus {
-  outline: none;
-  border: 0;
+  color: grey;
 }
 
-.title > div:last-child {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+
+.tweet_ornamental .editableDiv:focus {
+  outline: none;
+  border: 0;
 }
 
 .tweeticon {
@@ -100,14 +102,52 @@
   padding-left: 6px;
 }
 
-.tweeticon svg {
+.tweeticon div:not(:last-child) {
   fill: var(--color-tweet);
   width: 20px;
   padding: 8px;
 }
+.tweeticon div:last-child {
+  fill: var(--color-post-inactive);
+  width: 20px;
+  padding: 8px;
+  transition: background-color 0.2s ease-in-out;
+}
 
-.tweeticon svg:hover {
+.tweeticon div:not(:last-child):hover {
   cursor: pointer;
   background-color: rgba(15, 78, 120, 0.2);
   border-radius: 9999px;
+}
+
+@media screen and (max-width: 700px) {
+  .timeline {
+    border-right: 0;
+  }
+  .tweet_ornamental .editableDiv {
+    max-width: 80vw;
+  }
+}
+@media screen and (max-width: 400px) {
+  .tweeticon {
+    padding-left: 0px;
+  }
+
+  .tweeticon div:not(:last-child) {
+    padding: 6px 4px;
+  }
+  .tweeticon div:last-child {
+    padding: 6px 4px;
+  }
+
+  .tweeticon div:not(:last-child):hover {
+    background-color: black;
+    border-radius: 0px;
+  }
+
+  .tweet_ornamental button {
+    font-size: 13px;
+    line-height: 13px;
+    padding: 8px 15px;
+  }
 }

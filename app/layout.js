@@ -5,10 +5,6 @@ import Banner from "@/components/banner";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-  title: "Home / X",
-  description: "A Next.js app",
-};
 
 export default function RootLayout({ children }) {
   return (

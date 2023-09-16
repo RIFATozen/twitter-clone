@@ -1,5 +1,8 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./styles.module.css";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const menuItems = [
   {
@@ -62,16 +65,7 @@ const menuItems = [
     ),
     label: "Lists",
   },
-  {
-    icon: (
-      <svg viewBox="0 0 24 24" aria-hidden="true" width="26.25px">
-        <g>
-          <path d="M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5zM6.5 4c-.276 0-.5.22-.5.5v14.56l6-4.29 6 4.29V4.5c0-.28-.224-.5-.5-.5h-11z"></path>
-        </g>
-      </svg>
-    ),
-    label: "Bookmarks",
-  },
+
   {
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true" width="26.25px">
@@ -104,11 +98,7 @@ const menuItems = [
   },
   {
     icon: (
-      <svg
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-        width="26.25px"
-      >
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="26.25px">
         <g>
           <path d="M3.75 12c0-4.56 3.69-8.25 8.25-8.25s8.25 3.69 8.25 8.25-3.69 8.25-8.25 8.25S3.75 16.56 3.75 12zM12 1.75C6.34 1.75 1.75 6.34 1.75 12S6.34 22.25 12 22.25 22.25 17.66 22.25 12 17.66 1.75 12 1.75zm-4.75 11.5c.69 0 1.25-.56 1.25-1.25s-.56-1.25-1.25-1.25S6 11.31 6 12s.56 1.25 1.25 1.25zm9.5 0c.69 0 1.25-.56 1.25-1.25s-.56-1.25-1.25-1.25-1.25.56-1.25 1.25.56 1.25 1.25 1.25zM13.25 12c0 .69-.56 1.25-1.25 1.25s-1.25-.56-1.25-1.25.56-1.25 1.25-1.25 1.25.56 1.25 1.25z"></path>
         </g>
@@ -118,21 +108,296 @@ const menuItems = [
   },
 ];
 
+const activeMenuItems = [
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="30px">
+        <g>
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+        </g>
+      </svg>
+    ),
+    label: "",
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="26.25px">
+        <g>
+          <path d="M12 1.696L.622 8.807l1.06 1.696L3 9.679V19.5C3 20.881 4.119 22 5.5 22h13c1.381 0 2.5-1.119 2.5-2.5V9.679l1.318.824 1.06-1.696L12 1.696zM12 16.5c-1.933 0-3.5-1.567-3.5-3.5s1.567-3.5 3.5-3.5 3.5 1.567 3.5 3.5-1.567 3.5-3.5 3.5z"></path>
+        </g>
+      </svg>
+    ),
+    label: "Home",
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="26.25px">
+        <g>
+          <path d="M10.25 4.25c-3.314 0-6 2.686-6 6s2.686 6 6 6c1.657 0 3.155-.67 4.243-1.757 1.087-1.088 1.757-2.586 1.757-4.243 0-3.314-2.686-6-6-6zm-9 6c0-4.971 4.029-9 9-9s9 4.029 9 9c0 1.943-.617 3.744-1.664 5.215l4.475 4.474-2.122 2.122-4.474-4.475c-1.471 1.047-3.272 1.664-5.215 1.664-4.971 0-9-4.029-9-9z"></path>
+        </g>
+      </svg>
+    ),
+    label: "Explore",
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="26.25px">
+        <g>
+          <path d="M11.996 2c-4.062 0-7.49 3.021-7.999 7.051L2.866 18H7.1c.463 2.282 2.481 4 4.9 4s4.437-1.718 4.9-4h4.236l-1.143-8.958C19.48 5.017 16.054 2 11.996 2zM9.171 18h5.658c-.412 1.165-1.523 2-2.829 2s-2.417-.835-2.829-2z"></path>
+        </g>
+      </svg>
+    ),
+    label: "Notifications",
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="26.25px">
+        <g>
+          <path d="M1.998 4.499c0-.828.671-1.499 1.5-1.499h17c.828 0 1.5.671 1.5 1.499v2.858l-10 4.545-10-4.547V4.499zm0 5.053V19.5c0 .828.671 1.5 1.5 1.5h17c.828 0 1.5-.672 1.5-1.5V9.554l-10 4.545-10-4.547z"></path>
+        </g>
+      </svg>
+    ),
+    label: "Messages",
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="26.25px">
+        <g>
+          <path d="M18.5 2h-13C4.12 2 3 3.12 3 4.5v15C3 20.88 4.12 22 5.5 22h13c1.38 0 2.5-1.12 2.5-2.5v-15C21 3.12 19.88 2 18.5 2zM16 14H8v-2h8v2zm0-4H8V8h8v2z"></path>
+        </g>
+      </svg>
+    ),
+    label: "Lists",
+  },
+
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="26.25px">
+        <g>
+          <path d="M7.471 21H.472l.029-1.027c.184-6.618 3.736-8.977 7-8.977.963 0 1.95.212 2.87.672-1.608 1.732-2.762 4.389-2.869 8.248l-.03 1.083zM9.616 9.27C10.452 8.63 11 7.632 11 6.5 11 4.57 9.433 3 7.5 3S4 4.57 4 6.5c0 1.132.548 2.13 1.384 2.77.589.451 1.317.73 2.116.73s1.527-.279 2.116-.73zm6.884 1.726c-3.264 0-6.816 2.358-7 8.977L9.471 21h14.057l-.029-1.027c-.184-6.618-3.736-8.977-7-8.977zm2.116-1.726C19.452 8.63 20 7.632 20 6.5 20 4.57 18.433 3 16.5 3S13 4.57 13 6.5c0 1.132.548 2.13 1.384 2.77.589.451 1.317.73 2.116.73s1.527-.279 2.116-.73z"></path>
+        </g>
+      </svg>
+    ),
+    label: "Communities",
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 22 22" aria-hidden="true" width="26.25px">
+        <g>
+          <path d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.246.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"></path>
+        </g>
+      </svg>
+    ),
+    label: "Verified",
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="26.25px">
+        <g>
+          <path d="M17.863 13.44c1.477 1.58 2.366 3.8 2.632 6.46l.11 1.1H3.395l.11-1.1c.266-2.66 1.155-4.88 2.632-6.46C7.627 11.85 9.648 11 12 11s4.373.85 5.863 2.44zM12 2C9.791 2 8 3.79 8 6s1.791 4 4 4 4-1.79 4-4-1.791-4-4-4z"></path>
+        </g>
+      </svg>
+    ),
+    label: "Profile",
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="26.25px">
+        <g>
+          <path d="M3.75 12c0-4.56 3.69-8.25 8.25-8.25s8.25 3.69 8.25 8.25-3.69 8.25-8.25 8.25S3.75 16.56 3.75 12zM12 1.75C6.34 1.75 1.75 6.34 1.75 12S6.34 22.25 12 22.25 22.25 17.66 22.25 12 17.66 1.75 12 1.75zm-4.75 11.5c.69 0 1.25-.56 1.25-1.25s-.56-1.25-1.25-1.25S6 11.31 6 12s.56 1.25 1.25 1.25zm9.5 0c.69 0 1.25-.56 1.25-1.25s-.56-1.25-1.25-1.25-1.25.56-1.25 1.25.56 1.25 1.25 1.25zM13.25 12c0 .69-.56 1.25-1.25 1.25s-1.25-.56-1.25-1.25.56-1.25 1.25-1.25 1.25.56 1.25 1.25z"></path>
+        </g>
+      </svg>
+    ),
+    label: "More",
+  },
+];
+
+const tweetItems = [
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <g>
+          <path d="M3 5.5C3 4.119 4.119 3 5.5 3h13C19.881 3 21 4.119 21 5.5v13c0 1.381-1.119 2.5-2.5 2.5h-13C4.119 21 3 19.881 3 18.5v-13zM5.5 5c-.276 0-.5.224-.5.5v9.086l3-3 3 3 5-5 3 3V5.5c0-.276-.224-.5-.5-.5h-13zM19 15.414l-3-3-5 5-3-3-3 3V18.5c0 .276.224.5.5.5h13c.276 0 .5-.224.5-.5v-3.086zM9.75 7C8.784 7 8 7.784 8 8.75s.784 1.75 1.75 1.75 1.75-.784 1.75-1.75S10.716 7 9.75 7z"></path>
+        </g>
+      </svg>
+    ),
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <g>
+          <path d="M3 5.5C3 4.119 4.12 3 5.5 3h13C19.88 3 21 4.119 21 5.5v13c0 1.381-1.12 2.5-2.5 2.5h-13C4.12 21 3 19.881 3 18.5v-13zM5.5 5c-.28 0-.5.224-.5.5v13c0 .276.22.5.5.5h13c.28 0 .5-.224.5-.5v-13c0-.276-.22-.5-.5-.5h-13zM18 10.711V9.25h-3.74v5.5h1.44v-1.719h1.7V11.57h-1.7v-.859H18zM11.79 9.25h1.44v5.5h-1.44v-5.5zm-3.07 1.375c.34 0 .77.172 1.02.43l1.03-.86c-.51-.601-1.28-.945-2.05-.945C7.19 9.25 6 10.453 6 12s1.19 2.75 2.72 2.75c.85 0 1.54-.344 2.05-.945v-2.149H8.38v1.032H9.4v.515c-.17.086-.42.172-.68.172-.76 0-1.36-.602-1.36-1.375 0-.688.6-1.375 1.36-1.375z"></path>
+        </g>
+      </svg>
+    ),
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <g>
+          <path d="M6 5c-1.1 0-2 .895-2 2s.9 2 2 2 2-.895 2-2-.9-2-2-2zM2 7c0-2.209 1.79-4 4-4s4 1.791 4 4-1.79 4-4 4-4-1.791-4-4zm20 1H12V6h10v2zM6 15c-1.1 0-2 .895-2 2s.9 2 2 2 2-.895 2-2-.9-2-2-2zm-4 2c0-2.209 1.79-4 4-4s4 1.791 4 4-1.79 4-4 4-4-1.791-4-4zm20 1H12v-2h10v2zM7 7c0 .552-.45 1-1 1s-1-.448-1-1 .45-1 1-1 1 .448 1 1z"></path>
+        </g>
+      </svg>
+    ),
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <g>
+          <path d="M8 9.5C8 8.119 8.672 7 9.5 7S11 8.119 11 9.5 10.328 12 9.5 12 8 10.881 8 9.5zm6.5 2.5c.828 0 1.5-1.119 1.5-2.5S15.328 7 14.5 7 13 8.119 13 9.5s.672 2.5 1.5 2.5zM12 16c-2.224 0-3.021-2.227-3.051-2.316l-1.897.633c.05.15 1.271 3.684 4.949 3.684s4.898-3.533 4.949-3.684l-1.896-.638c-.033.095-.83 2.322-3.053 2.322zm10.25-4.001c0 5.652-4.598 10.25-10.25 10.25S1.75 17.652 1.75 12 6.348 1.75 12 1.75 22.25 6.348 22.25 12zm-2 0c0-4.549-3.701-8.25-8.25-8.25S3.75 7.451 3.75 12s3.701 8.25 8.25 8.25 8.25-3.701 8.25-8.25z"></path>
+        </g>
+      </svg>
+    ),
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <g>
+          <path d="M6 3V2h2v1h6V2h2v1h1.5C18.88 3 20 4.119 20 5.5v2h-2v-2c0-.276-.22-.5-.5-.5H16v1h-2V5H8v1H6V5H4.5c-.28 0-.5.224-.5.5v12c0 .276.22.5.5.5h3v2h-3C3.12 20 2 18.881 2 17.5v-12C2 4.119 3.12 3 4.5 3H6zm9.5 8c-2.49 0-4.5 2.015-4.5 4.5s2.01 4.5 4.5 4.5 4.5-2.015 4.5-4.5-2.01-4.5-4.5-4.5zM9 15.5C9 11.91 11.91 9 15.5 9s6.5 2.91 6.5 6.5-2.91 6.5-6.5 6.5S9 19.09 9 15.5zm5.5-2.5h2v2.086l1.71 1.707-1.42 1.414-2.29-2.293V13z"></path>
+        </g>
+      </svg>
+    ),
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <g>
+          <path d="M12 7c-1.93 0-3.5 1.57-3.5 3.5S10.07 14 12 14s3.5-1.57 3.5-3.5S13.93 7 12 7zm0 5c-.827 0-1.5-.673-1.5-1.5S11.173 9 12 9s1.5.673 1.5 1.5S12.827 12 12 12zm0-10c-4.687 0-8.5 3.813-8.5 8.5 0 5.967 7.621 11.116 7.945 11.332l.555.37.555-.37c.324-.216 7.945-5.365 7.945-11.332C20.5 5.813 16.687 2 12 2zm0 17.77c-1.665-1.241-6.5-5.196-6.5-9.27C5.5 6.916 8.416 4 12 4s6.5 2.916 6.5 6.5c0 4.073-4.835 8.028-6.5 9.27z"></path>
+        </g>
+      </svg>
+    ),
+  },
+];
+
 function Banner() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const pathname = usePathname();
+  usePathname;
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const divRef = useRef(null);
+
+  const placeholder = "What is happening?!";
+
+  const handleDivClick = () => {
+    const contentDiv = divRef.current;
+    if (contentDiv.textContent.trim() === placeholder) {
+      contentDiv.textContent = "";
+      contentDiv.style.color = "white";
+    }
+  };
+  const handleDivBlur = () => {
+    const contentDiv = divRef.current;
+    if (contentDiv.textContent.trim() === "") {
+      contentDiv.textContent = placeholder;
+      contentDiv.style.color = "grey";
+    }
+  };
+  const handleModalClose = (event) => {
+    if (
+      !event.target.closest(`.${styles.modal}`) &&
+      !event.target.closest(`button`)
+    ) {
+      console.log("close");
+      setIsModalOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isModalOpen) {
+      window.addEventListener("click", handleModalClose);
+
+      return () => {
+        window.removeEventListener("click", handleModalClose);
+      };
+    }
+  }, [isModalOpen]);
+
   return (
     <div className={styles.container}>
       <div className={styles.banner}>
         {menuItems.map((item, index) => (
-          <div key={index}>
-            {item.icon}
-            <p>{item.label}</p>
-          </div>
+          <Link href={`/${item.label.toLowerCase()}`} key={index}>
+            <div className={styles.white}>
+              {pathname.slice(1) === item.label.toLowerCase() ? (
+                <>
+                  {activeMenuItems[index].icon}
+                  <p style={{ fontWeight: "700" }}>{item.label}</p>
+                </>
+              ) : (
+                <>
+                  {item.icon}
+                  <p>{item.label}</p>
+                </>
+              )}
+            </div>
+          </Link>
         ))}
 
         <div className={styles.btn}>
-          <button>Post</button>
+          <button onClick={openModal}>
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              width="26.25px"
+              className={styles.white}
+            >
+              <g>
+                <path d="M23 3c-6.62-.1-10.38 2.421-13.05 6.03C7.29 12.61 6 17.331 6 22h2c0-1.007.07-2.012.19-3H12c4.1 0 7.48-3.082 7.94-7.054C22.79 10.147 23.17 6.359 23 3zm-7 8h-1.5v2H16c.63-.016 1.2-.08 1.72-.188C16.95 15.24 14.68 17 12 17H8.55c.57-2.512 1.57-4.851 3-6.78 2.16-2.912 5.29-4.911 9.45-5.187C20.95 8.079 19.9 11 16 11zM4 9V6H1V4h3V1h2v3h3v2H6v3H4z"></path>
+              </g>
+            </svg>
+            <span>Post</span>
+          </button>
+          {isModalOpen && (
+            <div className={styles.modalOverlay}>
+              <div className={styles.modal}>
+                <span className={styles.close} onClick={closeModal}>
+                  <svg viewBox="0 0 24 24" aria-hidden="true" width="20px">
+                    <g>
+                      <path d="M10.59 12L4.54 5.96l1.42-1.42L12 10.59l6.04-6.05 1.42 1.42L13.41 12l6.05 6.04-1.42 1.42L12 13.41l-6.04 6.05-1.42-1.42L10.59 12z"></path>
+                    </g>
+                  </svg>
+                </span>
+                <div className={styles.tweet}>
+                  <div>
+                    <img src="/pp.jpg" width="40px" alt="pp" />
+                  </div>
+                  <div className={styles.tweet_ornamental}>
+                    <div>
+                      <div
+                        className={styles.editableDiv}
+                        contentEditable="true"
+                        ref={divRef}
+                        onClick={handleDivClick}
+                        onBlur={handleDivBlur}
+                      >
+                        What is happening?!
+                      </div>
+                    </div>
+                    <div>
+                      <div className={styles.tweeticon}>
+                        {tweetItems.map((item, index) => (
+                          <div key={index}>{item.icon}</div>
+                        ))}
+                      </div>
+                      <div>
+                        <button>Post</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
+
       <div className={styles.info}>
         <div>
           <img src="/pp.jpg" alt="pp" width="40px" />
@@ -142,11 +407,7 @@ function Banner() {
           </div>
         </div>
         <div>
-          <svg
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-            width="18.75px"
-          >
+          <svg viewBox="0 0 24 24" aria-hidden="true" width="18.75px">
             <g>
               <path d="M3 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path>
             </g>
