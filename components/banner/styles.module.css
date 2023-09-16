@@ -50,12 +50,16 @@
   padding: 10px;
   width: 90%;
   border-radius: 9999px;
-  background-color: var(--color-tweet);
-  color: white;
+
+
   border: 1px solid black;
   font-weight: 700;
   margin: 10px;
   transition: background-color 0.2s ease-in-out;
+}
+.btn > button {
+  color: white;
+  background-color: var(--color-tweet);
 }
 
 .btn button:hover {
@@ -130,8 +134,6 @@
   border-top: 1px solid rgb(47, 51, 54);
 }
 .tweet_ornamental button {
-  color: grey;
-  background-color: var(--color-post-inactive);
   font-size: 15px;
   line-height: 15px;
   border: 0;
@@ -139,17 +141,40 @@
   border-radius: 9999px;
   padding: 10px 18px;
 }
-.tweet_ornamental .editableDiv {
+
+.empty {
+  color: grey;
+  background-color: var(--color-post-inactive);
+}
+.notempty {
+  color: white;
+  background-color: var(--color-tweet-active);
+}
+
+.tweet_ornamental .editableDiv,
+.editableDiv + div {
   font-size: 20px;
   line-height: 24px;
   width: 500px;
   box-sizing: border-box;
-  color: white;
   background-color: inherit;
   border: 0;
   padding: 6px 0 0 12px;
   color: grey;
 }
+
+.editableDiv + div {
+  position: absolute;
+  top: 46px;
+}
+
+.clicked {
+  display: none;
+}
+.notclicked {
+  display: block;
+}
+
 .tweet_ornamental .editableDiv:focus {
   outline: none;
   border: 0;
@@ -224,6 +249,9 @@
   .white p {
     display: none;
   }
+  .banner > a:not(:first-child) > div > svg {
+    margin-right: 0;
+  }
   .btn > button {
     width: 54%;
     margin-left: 17px;
@@ -234,7 +262,7 @@
   .btn button span {
     display: none;
   }
-  .info >div :not(img) {
+  .info > div :not(img) {
     display: none;
   }
 }

@@ -271,6 +271,8 @@ const tweetItems = [
 
 function Banner() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
+  const [empty, setIsEmpty] = useState(true);
   const pathname = usePathname();
   usePathname;
   const openModal = () => {
@@ -285,20 +287,30 @@ function Banner() {
 
   const placeholder = "What is happening?!";
 
-  const handleDivClick = () => {
-    const contentDiv = divRef.current;
-    if (contentDiv.textContent.trim() === placeholder) {
-      contentDiv.textContent = "";
-      contentDiv.style.color = "white";
-    }
-  };
   const handleDivBlur = () => {
     const contentDiv = divRef.current;
     if (contentDiv.textContent.trim() === "") {
-      contentDiv.textContent = placeholder;
-      contentDiv.style.color = "grey";
+      setIsClicked(false);
     }
   };
+
+  const [content, setContent] = useState("");
+
+  const handleInput = (e) => {
+    const newContent = e.target.textContent;
+    setContent(newContent);
+    if (newContent.trim() !== "") {
+      setIsEmpty(false);
+    } else if (newContent.trim() === "") {
+      setIsEmpty(true);
+    }
+  };
+  const handleClick = () => {
+    setIsClicked(true);
+    divRef.current.focus();
+    divRef.current.style.color = "white";
+  };
+
   const handleModalClose = (event) => {
     if (
       !event.target.closest(`.${styles.modal}`) &&
@@ -374,8 +386,15 @@ function Banner() {
                         className={styles.editableDiv}
                         contentEditable="true"
                         ref={divRef}
-                        onClick={handleDivClick}
                         onBlur={handleDivBlur}
+                        onInput={handleInput}
+                      >
+                      </div>
+                      <div
+                        className={
+                          isClicked ? styles.clicked : styles.notclicked
+                        }
+                        onClick={handleClick}
                       >
                         What is happening?!
                       </div>
@@ -387,7 +406,11 @@ function Banner() {
                         ))}
                       </div>
                       <div>
-                        <button>Post</button>
+                        <button
+                          className={empty ? styles.empty : styles.notempty}
+                        >
+                          Post
+                        </button>
                       </div>
                     </div>
                   </div>

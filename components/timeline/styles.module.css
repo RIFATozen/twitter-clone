@@ -66,16 +66,25 @@
   align-items: flex-end;
 }
 .tweet_ornamental button {
-  color: grey;
-  background-color: var(--color-post-inactive);
   font-size: 15px;
   line-height: 15px;
   border: 0;
   height: min-content;
   border-radius: 9999px;
   padding: 10px 18px;
+  transition: background-color 0.2s ease-in-out;
 }
-.tweet_ornamental .editableDiv {
+.empty {
+  color: grey;
+  background-color: var(--color-post-inactive);
+}
+.notempty {
+  color: white;
+  background-color: var(--color-tweet-active);
+}
+
+.tweet_ornamental .editableDiv,
+.editableDiv + div {
   font-size: 20px;
   line-height: 24px;
   height: 24px;
@@ -87,6 +96,17 @@
   color: grey;
 }
 
+.editableDiv + div {
+  position: absolute;
+  top: 124px;
+}
+
+.clicked {
+  display: none;
+}
+.notclicked {
+  display: block;
+}
 
 .tweet_ornamental .editableDiv:focus {
   outline: none;

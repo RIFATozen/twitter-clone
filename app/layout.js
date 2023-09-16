@@ -8,11 +8,11 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={inter.className}>
+    <html lang="en" >
       <head>
         <link rel="icon" href="/favicon/favicon.ico" sizes="any" />
       </head>
-      <body>
+      <body className={inter.className}>
         <div className="container">
           <div className="innerContainer">
             <Banner />
