@@ -14,7 +14,7 @@
 
 .title > div:last-child {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 }
 .content {
   justify-items: center;
@@ -80,14 +80,14 @@
 }
 .notempty {
   color: white;
-  background-color: var(--color-tweet-active);
+  background-color: var(--color-tweet);
+  cursor: pointer;
 }
 
 .tweet_ornamental .editableDiv,
 .editableDiv + div {
   font-size: 20px;
   line-height: 24px;
-  height: 24px;
   width: 525px;
   box-sizing: border-box;
   background-color: inherit;
@@ -140,12 +140,41 @@
   border-radius: 9999px;
 }
 
+.banner {
+  display: none;
+  position: fixed;
+  width: 100%;
+  bottom: 0%;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  padding: 10px 0;
+  border-top: 1px solid rgb(47, 51, 54);
+}
+.banner svg {
+  fill: white;
+}
+.icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* styles for explore page */
+
+.search {
+  margin: 5px 150px 5px 50px;
+}
+/*  */
+
 @media screen and (max-width: 700px) {
   .timeline {
     border-right: 0;
   }
-  .tweet_ornamental .editableDiv {
+  .tweet_ornamental .editableDiv,
+  .editableDiv + div {
     max-width: 80vw;
+  }
+  .banner {
+    display: grid;
   }
 }
 @media screen and (max-width: 400px) {

@@ -2,11 +2,11 @@ import React from "react";
 import Timeline from "@/components/timeline";
 import Trending from "@/components/trending";
 
-function HomeContainer() {
+function HomeContainer({params}) {
   return (
     <div>
-      <Timeline />
-      <Trending />
+      <Timeline params={params} />
+      <Trending params={params}/>
     </div>
   );
 }

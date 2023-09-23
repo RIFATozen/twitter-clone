@@ -64,7 +64,6 @@
 
 .btn button:hover {
   cursor: pointer;
-  background-color: var(--color-tweet-active);
 }
 .btn button svg {
   display: none;

@@ -7,10 +7,11 @@ export const generateMetadata = ({ params }) => {
   };
 };
 
-export default function Home() {
+export default function Home({params}) {
+
   return (
     <div>
-      <HomeContainer />
+      <HomeContainer params={params} />
     </div>
   );
 }

@@ -274,7 +274,6 @@ function Banner() {
   const [isClicked, setIsClicked] = useState(false);
   const [empty, setIsEmpty] = useState(true);
   const pathname = usePathname();
-  usePathname;
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -388,8 +387,7 @@ function Banner() {
                         ref={divRef}
                         onBlur={handleDivBlur}
                         onInput={handleInput}
-                      >
-                      </div>
+                      ></div>
                       <div
                         className={
                           isClicked ? styles.clicked : styles.notclicked

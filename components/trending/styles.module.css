@@ -29,6 +29,9 @@
   background-color: var(--color-tweet);
   font-weight: 800;
 }
+.verified > button:hover {
+cursor: pointer;
+}
 
 .footer {
   padding: 0 15px;
