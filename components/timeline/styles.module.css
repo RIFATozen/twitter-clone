@@ -1,5 +1,6 @@
 .timeline {
   border-right: 1px solid rgb(47, 51, 54);
+  border-left: 1px solid rgb(47, 51, 54);
 }
 
 .title {
@@ -148,6 +149,7 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   padding: 10px 0;
   border-top: 1px solid rgb(47, 51, 54);
+  background-color: black;
 }
 .banner svg {
   fill: white;

@@ -425,6 +425,7 @@ function Banner() {
           <div>
             <h6>Rıfat Özen</h6>
             <p>@RIFATozn</p>
+            
           </div>
         </div>
         <div>

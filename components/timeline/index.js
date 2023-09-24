@@ -5,6 +5,7 @@ import Search from "../search";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import Tweet from "../tweet";
 
 const tweetItems = [
   {
@@ -269,6 +270,7 @@ function Timeline({ params }) {
               </div>
             </div>
           </div>
+          <Tweet/>
         </>
       )}
       {params.blog === "explore" && (

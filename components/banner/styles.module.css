@@ -3,7 +3,6 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100vh;
-  border-right: 1px solid rgb(47, 51, 54);
   overflow: auto;
 }
 
@@ -209,7 +208,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 15px;
-  margin: 15px 10px;
+  margin:  15px;
   padding: 10px;
   border-radius: 9999px;
   transition: background-color 0.2s ease-in-out;
@@ -223,6 +222,7 @@
 .info > div {
   display: flex;
   align-items: center;
+  
 }
 .info h6 {
   margin-bottom: 5px;
@@ -263,5 +263,8 @@
   }
   .info > div :not(img) {
     display: none;
+  }
+  .info img {
+    margin-right: 0;
   }
 }
